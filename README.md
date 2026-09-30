@@ -16,6 +16,10 @@ Course(id, code, title, instructor: Instructor)
 Enrollment(id, course: Course, enrolled_at, grade?)
 ```
 
+## UML Compatibility
+
+DomainText does not currently represent the full UML model. Missing features include methods, visibility, abstract classes, interfaces, packages, stereotypes, bidirectional associations, explicit ranges such as `1..*`, association classes, qualifiers, and constraints.
+
 ## Project Contents
 
 - [`references/domaintext-spec.md`](references/domaintext-spec.md): language specification.
