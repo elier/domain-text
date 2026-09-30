@@ -1,0 +1,195 @@
+{
+  "version": "domaintext/0.1",
+  "entities": [
+    {
+      "name": "Person",
+      "inherits": null,
+      "fields": [
+        {
+          "name": "id",
+          "type": "scalar",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        },
+        {
+          "name": "name",
+          "type": "scalar",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        },
+        {
+          "name": "email",
+          "type": "scalar",
+          "optional": true,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        }
+      ]
+    },
+    {
+      "name": "Student",
+      "inherits": "Person",
+      "fields": [
+        {
+          "name": "student_number",
+          "type": "scalar",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        },
+        {
+          "name": "enrollments",
+          "type": "Enrollment",
+          "optional": false,
+          "many": true,
+          "owned": true,
+          "kind": "composition"
+        }
+      ]
+    },
+    {
+      "name": "Instructor",
+      "inherits": "Person",
+      "fields": [
+        {
+          "name": "employee_number",
+          "type": "scalar",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        }
+      ]
+    },
+    {
+      "name": "Course",
+      "inherits": null,
+      "fields": [
+        {
+          "name": "id",
+          "type": "scalar",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        },
+        {
+          "name": "code",
+          "type": "scalar",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        },
+        {
+          "name": "title",
+          "type": "scalar",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        },
+        {
+          "name": "instructor",
+          "type": "Instructor",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "reference"
+        }
+      ]
+    },
+    {
+      "name": "Enrollment",
+      "inherits": null,
+      "fields": [
+        {
+          "name": "id",
+          "type": "scalar",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        },
+        {
+          "name": "course",
+          "type": "Course",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "reference"
+        },
+        {
+          "name": "enrolled_at",
+          "type": "scalar",
+          "optional": false,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        },
+        {
+          "name": "grade",
+          "type": "scalar",
+          "optional": true,
+          "many": false,
+          "owned": false,
+          "kind": "scalar"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": "Student",
+      "to": "Person",
+      "field": "<",
+      "many": false,
+      "optional": false,
+      "owned": false,
+      "kind": "inheritance"
+    },
+    {
+      "from": "Student",
+      "to": "Enrollment",
+      "field": "enrollments",
+      "many": true,
+      "optional": false,
+      "owned": true,
+      "kind": "composition"
+    },
+    {
+      "from": "Instructor",
+      "to": "Person",
+      "field": "<",
+      "many": false,
+      "optional": false,
+      "owned": false,
+      "kind": "inheritance"
+    },
+    {
+      "from": "Course",
+      "to": "Instructor",
+      "field": "instructor",
+      "many": false,
+      "optional": false,
+      "owned": false,
+      "kind": "reference"
+    },
+    {
+      "from": "Enrollment",
+      "to": "Course",
+      "field": "course",
+      "many": false,
+      "optional": false,
+      "owned": false,
+      "kind": "reference"
+    }
+  ],
+  "errors": []
+}

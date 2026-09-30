@@ -1,0 +1,5 @@
+Person(id, name, email?)
+Student(student_number, enrollments: Enrollment[]!) < Person
+Instructor(employee_number) < Person
+Course(id, code, title, instructor: Instructor)
+Enrollment(id, course: Course, enrolled_at, grade?)

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/domaintext/normalized-schema.json",
+  "title": "DomainTextNormalizedModel",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "entities", "relationships", "errors"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "domaintext/0.1"
+    },
+    "entities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entity" }
+    },
+    "relationships": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relationship" }
+    },
+    "errors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/error" }
+    }
+  },
+  "$defs": {
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "inherits", "fields"],
+      "properties": {
+        "name": { "type": "string" },
+        "inherits": { "type": ["string", "null"] },
+        "fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/field" }
+        }
+      }
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "optional", "many", "owned", "kind"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "optional": { "type": "boolean" },
+        "many": { "type": "boolean" },
+        "owned": { "type": "boolean" },
+        "kind": {
+          "type": "string",
+          "enum": ["scalar", "reference", "composition"]
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "field", "many", "optional", "owned", "kind"],
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "field": { "type": "string" },
+        "many": { "type": "boolean" },
+        "optional": { "type": "boolean" },
+        "owned": { "type": "boolean" },
+        "kind": {
+          "type": "string",
+          "enum": ["reference", "composition", "inheritance"]
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["line", "message"],
+      "properties": {
+        "line": { "type": "integer", "minimum": 1 },
+        "message": { "type": "string" },
+        "text": { "type": "string" }
+      }
+    }
+  }
+}

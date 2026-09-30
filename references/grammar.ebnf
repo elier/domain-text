@@ -1,0 +1,39 @@
+(* DomainText v0.1 EBNF *)
+
+model         = { line } ;
+
+line          = [ ws ], [ declaration ], [ ws ], [ comment ], newline ;
+comment       = "#", { ? any character except newline ? } ;
+
+declaration   = entity_decl | inherit_decl ;
+
+entity_decl   = entity_name, ws_opt, "(", ws_opt, [ fields ], ws_opt, ")" ;
+inherit_decl  = entity_name, ws_opt, "(", ws_opt, [ fields ], ws_opt, ")", ws_opt, "<", ws_opt, entity_name ;
+
+fields        = field, { ws_opt, ",", ws_opt, field }, [ ws_opt, "," ] ;
+
+field         = field_name, [ field_suffix | typed_suffix ] ;
+field_suffix  = "?" ;
+typed_suffix  = ws_opt, ":", ws_opt, type_expr ;
+
+type_expr     = type_name, [ type_optional | type_many | type_owned | type_many_owned | type_many_optional ] ;
+type_optional = "?" ;
+type_many     = "[]" ;
+type_owned    = "!" ;
+type_many_owned = "[]!" ;
+type_many_optional = "[]?" ;
+
+entity_name   = upper_ident ;
+type_name     = ident ;
+field_name    = ident | spaced_ident ;
+
+upper_ident    = upper, { letter | digit | "_" } ;
+ident          = letter, { letter | digit | "_" } ;
+spaced_ident   = letter, { letter | digit | "_" | " " } ;
+
+upper          = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" ;
+letter         = upper | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;
+digit          = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+ws             = " " | "\t" ;
+ws_opt         = { ws } ;
+newline        = "\n" | "\r\n" | ? end of input ? ;
